@@ -1,0 +1,88 @@
+<app-header>
+
+</app-header>
+
+<div class="content" role="main">
+
+
+
+    <select #selectedUser id="user-select" (change)="setCurrentUser(selectedUser.value)">
+    <option value={{user.id}} *ngFor="let user of users">{{user.name}}</option>
+  </select>
+    <!--<div id="add" class="card-container">
+
+        <button class="card">
+            <span>Add New Task</span>
+        </button>
+    </div>-->
+
+
+    <div id="head">
+        <h5>Add Task</h5>
+        <input #newDescItem placeholder="add a task" (keyup.enter)="addItem(newDescItem.value, newCatItem.value); newDescItem.value = ''" class="lg-text-input" id="addItemInput" />
+        <select #newCatItem name="category" id="category-select">
+        
+           
+            <option  value="vital">Vital</option>
+            <option  value="fun">Fun</option>
+            <option value="work">Work</option>
+            <option value="shopping">Shopping</option>
+        </select>
+
+        <button class="btn-primary" (click)="addItem(newDescItem.value, newCatItem.value); newDescItem.value = ''">Add</button>
+    </div>
+    <div id="filterButtons" class="btn-wrapper">
+        <h2> Task to Display</h2>
+
+        <button style="background: rgb(20, 49, 234); color: white;" class="btn btn-menu" [class.active]="filter == 'all'" (click)="filter = 'all'">
+      All
+    </button>
+
+        <button style="background: rgb(159, 219, 29)" class="btn btn-menu" [class.active]="filter == 'vital'" (click)="filter = 'vital'">
+      Vital
+    </button>
+
+        <button style="background: rgb(18, 168, 213); color: white;" class="btn btn-menu" [class.active]="filter == 'fun'" (click)="filter = 'fun'">
+      Fun
+    </button>
+
+        <button style="background: rgb(33, 12, 96); color: white;" class="btn btn-menu" [class.active]="filter == 'work'" (click)="filter = 'work'">
+      Work
+    </button>
+
+        <button style="background: #d5b91d;" class="btn btn-menu" [class.active]="filter == 'shopping'" (click)="filter = 'shopping'">
+      Shopping
+    </button>
+    </div>
+    <div style=" display:flex" class="main">
+        <div style=" display:flex" id="items">
+            <div class="listitems" style="  background-color :#79d51d">
+                <h2>{{itemsActive.length}} <span *ngIf="itemsActive.length === 1; else elseBlock">Task</span>
+                    <ng-template #elseBlock>task</ng-template> to do</h2>
+
+                <ul>
+                    <li *ngFor="let item of itemsActive">
+                        <app-task (remove)="remove(item)" [item]="item"></app-task>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="listitems" style=" background-color :#1c9345">
+                <h2>{{itemsDone.length}} <span *ngIf="itemsDone.length === 1; else elseBlock">item</span>
+                    <ng-template #elseBlock>items</ng-template> done</h2>
+
+                <ul>
+                    <li *ngFor="let item of itemsDone">
+                        <app-task (remove)="remove(item)" [item]="item"></app-task>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <app-footer></app-footer>
+
+
+
+
+    <router-outlet></router-outlet>

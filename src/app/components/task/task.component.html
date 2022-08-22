@@ -1,0 +1,33 @@
+<div class="item">
+
+    <input [id]="item.description" type="checkbox" (change)="item.done = !item.done" [checked]="item.done" />
+    <label [for]="item.description">{{item.description}}</label>
+    <label [for]="item.category" class="categoryLabel" *ngIf="item.category === 'vital'" style="background: rgb(159, 219, 29);">{{item.category}}</label>
+    <label [for]="item.category" class="categoryLabel" *ngIf="item.category === 'fun'" style="background: rgb(18, 168, 213); color: white;">{{item.category}}</label>
+    <label [for]="item.category" class="categoryLabel" *ngIf="item.category === 'work'" style="background: rgb(33, 12, 96); color: white;">{{item.category}}</label>
+    <label [for]="item.category" class="categoryLabel" *ngIf="item.category === 'shopping'" style="background: #d5b91d;">{{item.category}}</label>
+
+    <div class="btn-wrapper" *ngIf="!editable">
+        <button class="btn btn-primary" (click)="editable = !editable">Edit</button>
+        <button class="btn btn-warn" (click)="remove.emit()">Delete</button>
+    </div>
+
+    <!-- This section shows only if user clicks Edit button -->
+    <div id="editMenu" *ngIf="editable">
+        <input class="sm-text-input" placeholder="edit item" [value]="item.description" #editedItem (keyup.enter)="saveItem(editedItem.value, editedCategory.value)">
+
+        <select name="category" class="sm-text-input" id="category-select" [value]="item.category" #editedCategory>
+        <option value="">None</option>
+        <option value="vital">Vital</option>
+        <option value="fun">Fun</option>
+        <option value="work">Work</option>
+        <option value="shopping">Shopping</option>
+      </select>
+
+        <div class="btn-wrapper">
+            <button class="btn" (click)="editable = !editable">Cancel</button>
+            <button class="btn btn-save" (click)="saveItem(editedItem.value, editedCategory.value)">Save</button>
+        </div>
+    </div>
+
+</div>
